@@ -334,6 +334,11 @@ func returnPreConsumedQuota(c *gin.Context, relayInfo *relaycommon.RelayInfo, us
 	}
 }
 
+/**
+* (输入token*单价+输出token*输出倍率*单价)*模型倍率*分组倍率 前端会写成
+* (输入token*单价*模型倍率+输出token*输出倍率*单价*模型倍率)*分组倍率
+* 本质就是拉到括号里计算了
+**/
 func postConsumeQuota(ctx *gin.Context, relayInfo *relaycommon.RelayInfo,
 	usage *dto.Usage, preConsumedQuota int, userQuota int, priceData helper.PriceData, extraContent string) {
 	if usage == nil {

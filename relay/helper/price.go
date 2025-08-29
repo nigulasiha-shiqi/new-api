@@ -73,6 +73,8 @@ func ModelPriceHelper(c *gin.Context, info *relaycommon.RelayInfo, promptTokens 
 	var cacheRatio float64
 	var imageRatio float64
 	var cacheCreationRatio float64
+	// 模型价格未设置倍率已设置   计算规则 模型倍率*组倍率
+	// 模型价格已设置           计算规则 模型价格*常数*组倍率
 	if !usePrice {
 		preConsumedTokens := common.PreConsumedQuota
 		if maxTokens != 0 {
