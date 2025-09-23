@@ -4,7 +4,6 @@
 <div align="center">
 
 ![new-api](/web/public/logo.png)
-
 # New API
 
 🍥新一代大模型网关与AI资产管理系统
@@ -30,6 +29,34 @@
 </p>
 </div>
 
+## 安装
+### 前端
+> 需要安装[bun](https://bun.com/) 使用pnpm会报错
+```bash 
+cd web && bun install && bun run dev
+```
+### 后端
+```bash
+cp .env.example .env #修改对应参数
+```
+> 注意配置文件中要写明 前端基础URL
+```json
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "main",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/main.go"
+        }
+    ]
+}
+```
 ## 📝 项目说明
 
 > [!NOTE]  
