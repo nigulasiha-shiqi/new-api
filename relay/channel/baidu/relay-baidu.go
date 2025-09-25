@@ -133,6 +133,7 @@ func baiduStreamHandler(c *gin.Context, info *relaycommon.RelayInfo, resp *http.
 		}
 		return true
 	})
+	helper.Done(c)
 	service.CloseResponseBodyGracefully(resp)
 	return nil, usage
 }
