@@ -114,6 +114,20 @@ func embeddingResponseBaidu2OpenAI(response *BaiduEmbeddingResponse) *dto.OpenAI
 
 func baiduStreamHandler(c *gin.Context, info *relaycommon.RelayInfo, resp *http.Response) (*types.NewAPIError, *dto.Usage) {
 	usage := &dto.Usage{}
+	println(resp.Header.Get("Content-Type"))
+	if strings.HasPrefix(resp.Header.Get("Content-Type"), "application/json") {
+		var baiduResponse BaiduChatResponse
+		responseBody, err := io.ReadAll(resp.Body)
+		err = json.Unmarshal(responseBody, &baiduResponse)
+		if err != nil {
+			return types.NewError(err, types.ErrorCodeBadResponseBody), nil
+		}
+		if baiduResponse.ErrorMsg != "" {
+			service.CloseResponseBodyGracefully(resp)
+			c.Writer.Header().Set("Content-Type", "application/json")
+			return types.NewError(fmt.Errorf(baiduResponse.ErrorMsg), types.ErrorCodeBadResponseBody), nil
+		}
+	}
 	helper.StreamScannerHandler(c, resp, info, func(data string) bool {
 		var baiduResponse BaiduChatStreamResponse
 		err := common.Unmarshal([]byte(data), &baiduResponse)
